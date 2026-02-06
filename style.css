@@ -1,0 +1,11 @@
+:root { --discord-dark: #36393f; --discord-black: #202225; --f5-gold: #ffcc00; --admin-red: #ed4245; }
+body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--discord-dark); color: white; overflow: hidden; }
+.hidden { display: none !important; }
+.screen { height: 100vh; display: flex; align-items: center; justify-content: center; }
+.sidebar { width: 240px; background: var(--discord-black); height: 100vh; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+#admin-tag { background: var(--admin-red); color: white; font-size: 10px; padding: 2px 5px; border-radius: 3px; font-weight: bold; width: fit-content; }
+.balance-box { background: #40444b; padding: 10px; border-radius: 8px; border-left: 4px solid var(--f5-gold); font-weight: bold; }
+.admin-panel { width: 350px; background: #2f3136; border-left: 2px solid var(--admin-red); padding: 20px; overflow-y: auto; }
+.admin-grid { display: grid; grid-template-cols: 1fr 1fr; gap: 10px; margin-top: 15px; }
+button { cursor: pointer; border: none; border-radius: 5px; padding: 10px; background: #5865f2; color: white; }
+.btn-redeem { background: #3ba55c; }
