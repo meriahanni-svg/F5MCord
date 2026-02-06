@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F5MCord | Control Center</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <div id="auth-screen" class="screen">
+        <div class="login-card">
+            <h1>F5MCord</h1>
+            <input type="email" id="email" placeholder="الجيميل">
+            <input type="password" id="pass" placeholder="كلمة السر">
+            <button onclick="handleAuth()">دخول / إنشاء حساب</button>
+        </div>
+    </div>
+
+    <div id="main-app" class="screen hidden">
+        <div class="sidebar">
+            <div class="server-icon">F5</div>
+            <div class="user-status">
+                <span id="user-display-name"></span>
+                <div id="admin-tag" class="hidden">ADMIN</div>
+            </div>
+            <div class="balance-box">
+                🪙 <span id="balance">0</span> F5
+            </div>
+            <button class="btn-redeem" onclick="showRedeem()">شحن كود</button>
+        </div>
+
+        <div class="chat-container">
+            <div id="chat-messages" class="messages"></div>
+            <div class="input-area">
+                <input type="text" id="msgInput" placeholder="اكتب رسالة...">
+                <button onclick="sendMessage()">إرسال</button>
+            </div>
+        </div>
+
+        <div id="god-panel" class="admin-panel hidden">
+            <h2>لوحة التحكم (15 ميزة)</h2>
+            <input type="text" id="target-id" placeholder="ID المستخدم المستهدف">
+            <div class="admin-grid">
+                <button onclick="adminAction('BAN')">حظر دائم</button>
+                <button onclick="adminAction('MUTE')">إسكات</button>
+                <button onclick="adminAction('RENAME')">تغيير الاسم</button>
+                <button onclick="adminAction('AVATAR')">تعديل الصورة</button>
+                <button onclick="adminAction('PROMOTE')">تعيين أدمن</button>
+                <button onclick="generateGiftCodes()">إنشاء مليون كود شحن</button>
+                <button onclick="adminAction('CLEAR')">مسح الشات</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
