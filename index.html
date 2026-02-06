@@ -3,58 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F5MCord | Control Center</title>
+    <title>F5MCord | المركز الرئيسي</title>
+    
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 </head>
 <body>
-    <div id="auth-screen" class="screen">
-        <div class="login-card">
+
+    <div id="auth-screen" class="auth-container">
+        <div class="login-box">
+            <img src="https://i.imgur.com/your-logo.png" alt="F5MCord Logo" class="logo">
             <h1>F5MCord</h1>
-            <input type="email" id="email" placeholder="الجيميل">
-            <input type="password" id="pass" placeholder="كلمة السر">
-            <button onclick="handleAuth()">دخول / إنشاء حساب</button>
+            <p>أدخل بياناتك للوصول إلى النظام</p>
+            <input type="email" id="email" placeholder="البريد الإلكتروني (Gmail)">
+            <input type="password" id="pass" placeholder="كلمة المرور">
+            <button onclick="handleAuth()" class="btn-primary">دخول / تسجيل</button>
         </div>
     </div>
 
-    <div id="main-app" class="screen hidden">
-        <div class="sidebar">
-            <div class="server-icon">F5</div>
-            <div class="user-status">
-                <span id="user-display-name"></span>
-                <div id="admin-tag" class="hidden">ADMIN</div>
+    <div id="main-app" class="app-layout hidden">
+        
+        <nav class="sidebar">
+            <div class="server-list">
+                <div class="server-icon active">F5</div>
             </div>
-            <div class="balance-box">
-                🪙 <span id="balance">0</span> F5
+            <div class="user-info">
+                <div class="avatar-container">
+                    <img id="user-avatar" src="default-avatar.png" alt="Avatar">
+                    <span id="admin-badge" class="badge hidden">ADMIN</span>
+                </div>
+                <div class="wallet">
+                    <span class="coin-icon">🪙</span>
+                    <span id="balance">0</span> F5
+                </div>
+                <button onclick="showRedeem()" class="btn-redeem">شحن كود</button>
             </div>
-            <button class="btn-redeem" onclick="showRedeem()">شحن كود</button>
-        </div>
+        </nav>
 
-        <div class="chat-container">
-            <div id="chat-messages" class="messages"></div>
-            <div class="input-area">
-                <input type="text" id="msgInput" placeholder="اكتب رسالة...">
-                <button onclick="sendMessage()">إرسال</button>
+        <main class="chat-area">
+            <header class="chat-header">
+                <h2># القناة-العامة</h2>
+            </header>
+            <div id="chat-messages" class="messages-container">
+                </div>
+            <div class="message-input">
+                <input type="text" id="msgInput" placeholder="اكتب رسالة في #القناة-العامة...">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
-        </div>
+        </main>
 
-        <div id="god-panel" class="admin-panel hidden">
-            <h2>لوحة التحكم (15 ميزة)</h2>
-            <input type="text" id="target-id" placeholder="ID المستخدم المستهدف">
-            <div class="admin-grid">
-                <button onclick="adminAction('BAN')">حظر دائم</button>
-                <button onclick="adminAction('MUTE')">إسكات</button>
-                <button onclick="adminAction('RENAME')">تغيير الاسم</button>
-                <button onclick="adminAction('AVATAR')">تعديل الصورة</button>
-                <button onclick="adminAction('PROMOTE')">تعيين أدمن</button>
-                <button onclick="generateGiftCodes()">إنشاء مليون كود شحن</button>
-                <button onclick="adminAction('CLEAR')">مسح الشات</button>
+        <aside id="god-panel" class="admin-sidebar hidden">
+            <div class="admin-header">
+                <h3><i class="fas fa-shield-halved"></i> لوحة التحكم</h3>
             </div>
-        </div>
+            
+            <div class="admin-controls">
+                <p class="section-title">إدارة المستخدمين</p>
+                <input type="text" id="target-id" placeholder="ID المستهدف (إيميله)">
+                
+                <div class="admin-buttons-grid">
+                    <button class="btn-danger" onclick="adminAction('BAN')" title="حظر دائم"><i class="fas fa-user-slash"></i> حظر</button>
+                    <button class="btn-warn" onclick="adminAction('TEMP_BAN')" title="حظر 24 ساعة"><i class="fas fa-clock"></i> حظر مؤقت</button>
+                    <button class="btn-success" onclick="adminAction('UNBAN')"><i class="fas fa-user-check"></i> فك حظر</button>
+                    <button class="btn-blue" onclick="adminAction('PROMOTE')"><i class="fas fa-user-shield"></i> ترقية</button>
+                    <button class="btn-gray" onclick="adminAction('DEMOTE')"><i class="fas fa-user-minus"></i> سحب رتبة</button>
+                    <button class="btn-info" onclick="adminAction('RENAME')"><i class="fas fa-edit"></i> تغيير اسم</button>
+                    <button class="btn-info" onclick="adminAction('AVATAR')"><i class="fas fa-image"></i> تغيير صورة</button>
+                    <button class="btn-danger" onclick="adminAction('MUTE')"><i class="fas fa-volume-mute"></i> إسكات</button>
+                    <button class="btn-black" onclick="adminAction('IP')"><i class="fas fa-network-wired"></i> كشف IP</button>
+                    <button class="btn-danger" onclick="adminAction('DELETE_ACC')"><i class="fas fa-trash-can"></i> حذف حساب</button>
+                    
+                    <p class="section-title">إدارة السيرفر والعملات</p>
+                    <button class="btn-gold" onclick="adminAction('GIVE_COINS')"><i class="fas fa-coins"></i> منح عملات</button>
+                    <button class="btn-gold" onclick="generateGiftCodes()"><i class="fas fa-ticket"></i> توليد مليون كود</button>
+                    <button class="btn-warn" onclick="adminAction('CLEAR')"><i class="fas fa-broom"></i> مسح الشات</button>
+                    <button class="btn-danger" onclick="adminAction('LOCK')"><i class="fas fa-lock"></i> قفل الشات</button>
+                    <button class="btn-black" onclick="adminAction('SHUTDOWN')"><i class="fas fa-power-off"></i> صيانة</button>
+                </div>
+                
+                <button class="btn-broadcast" onclick="adminAction('ANNOUNCE')">
+                    <i class="fas fa-bullhorn"></i> إرسال إعلان عام
+                </button>
+            </div>
+        </aside>
+
     </div>
 
     <script src="config.js"></script>
+    <script src="auth.js"></script>
     <script src="app.js"></script>
+    <script src="chat.js"></script>
+    <script src="admin_logic.js"></script>
+    <script src="economy.js"></script>
+
 </body>
 </html>
