@@ -1,0 +1,8 @@
+{
+  "short_name": "F5MCord",
+  "name": "F5MCord Official Platform",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#36393f",
+  "background_color": "#202225"
+}
